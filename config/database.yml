@@ -1,7 +1,7 @@
 default_env: &default
   adapter: postgresql
   encoding: unicode
-  database: s_todo
+  database: s_mintas
 
 development:
   <<: *default
