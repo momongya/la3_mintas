@@ -7,6 +7,7 @@ require 'open-uri'
 require 'json'
 require 'net/http'
 require 'sinatra/activerecord'
+require 'securerandom'
 
 enable :sessions
 
@@ -63,4 +64,35 @@ end
 get '/signout' do
     session[:user] = nil
     redirect '/'
+end
+
+get '/group/select' do
+    if current_user.nil?
+        @groups = Group.none
+    else
+        @groups = current_user.groups
+    end
+    erb :group_all
+end
+
+get '/group/create' do
+    erb :group_create
+end
+
+post '/group/create' do
+    group = Group.create(group_name: params[:group_name],code: SecureRandom.alphanumeric(10),color: params[:color])
+    GroupUser.create(user_id: current_user.id, group_id: group.id)
+    
+    redirect '/group/select'
+end
+
+get '/group/join' do
+    erb :group_join
+end
+
+post '/group/join' do
+    group = Group.find_by(group_name: params[:group_name],code: params[:code])
+    GroupUser.create(user_id: current_user.id, group_id: group.id)
+    
+    redirect '/group/select'
 end

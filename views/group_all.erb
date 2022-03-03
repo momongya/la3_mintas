@@ -1,0 +1,12 @@
+<section class="center-vertical">
+    <h1><%= current_user.name %>の参加しているグループ一覧</h1>
+    <% unless @groups.empty? %>
+	<% @groups.each do |group| %>
+		<div class="post center-vertical">
+			<p><%= group.group_name %></p>
+		</div>
+	<% end %>
+	<% else %>
+	<p>参加しているグループはありません</p>
+	<% end %>
+</section>
