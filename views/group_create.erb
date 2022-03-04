@@ -2,7 +2,13 @@
     <div class="login_button">
 		<form action="/group/create" method="post">
         	<input class="form-control" name="group_name" placeholder="作成するグループの名前を入力"><br>
-        	<input class="form-control" name="color" placeholder="グループカラーを選択"><br>
+        	<!--<input class="form-control" name="color" placeholder="グループカラーを選択"><br>-->
+        	<input type="color" name="color" list="color-list" value="#ffff00"> 色を選択
+                <datalist id="color-list">
+                    <option value="#ff0000">
+                    <option value="#0000ff">
+                    <option value="#ffff00">
+                </datalist>
         	<input class="form-control" type="submit" value="作成">
     	</form>
 	</div>

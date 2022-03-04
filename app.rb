@@ -50,7 +50,7 @@ post '/signup' do
     if user.persisted?
         session[:user] = user.id
     end
-    redirect '/'
+    redirect '/group/select'
 end
 
 post '/signin' do
@@ -58,7 +58,7 @@ post '/signin' do
     if user && user.authenticate(params[:password])
         session[:user] = user.id
     end
-    redirect '/'
+    redirect '/group/select'
 end
 
 get '/signout' do
