@@ -15,6 +15,10 @@ helpers do
     def current_user
         User.find_by(id: session[:user])
     end
+    
+    def current_group
+        Group.find_by(id: session[:group])
+    end
 end
 
 before do
@@ -95,4 +99,30 @@ post '/group/join' do
     GroupUser.create(user_id: current_user.id, group_id: group.id)
     
     redirect '/group/select'
+end
+
+get '/group/:id/home' do
+    session[:group] = params[:id]
+    if Task.count == 0
+        @task = Task.none
+    else
+        @task = Task.where(group_id: params[:id])
+    end
+    
+    erb :task_all
+end
+
+get '/group/:id/task/create' do
+    erb :task_create
+end
+
+post '/group/:id/task/create' do
+    current_group.tasks.create(
+                title: params[:title],
+                todo: params[:todo],
+                priority: params[:priority],
+                state: "todo",
+                leader_id: current_user.id
+                )
+    redirect '/'
 end

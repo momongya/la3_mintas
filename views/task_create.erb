@@ -1,0 +1,10 @@
+<section class="center-vertical">
+    <div class="login_button">
+		<form action="/group/<%= current_group.id %>/task/create" method="post">
+        	<input class="form-control" name="title" placeholder="作成するタスクのタイトルを入力"><br>
+        	<input class="form-control" name="todo" placeholder="タスクの詳細な内容を入力"><br>
+        	<input class="form-control" name="priority" placeholder="タスクの優先度を入力"><br>
+        	<input class="form-control" type="submit" value="作成">
+    	</form>
+	</div>
+</section>
