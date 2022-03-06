@@ -124,7 +124,7 @@ post '/group/:id/task/create' do
                 state: "todo",
                 leader_id: current_user.id
                 )
-    redirect '/'
+    redirect "/group/#{params[:id]}/home"
 end
 
 get '/group/:id/task/:task_id/edit' do
@@ -142,5 +142,11 @@ post '/group/:id/task/:task_id/edit' do
     task.state = params[:state]
     task.save
 
+    redirect "/group/#{params[:id]}/home"
+end
+
+get '/group/:id/task/:task_id/delete' do
+    task = Task.find(params[:task_id])
+    task.delete
     redirect "/group/#{params[:id]}/home"
 end

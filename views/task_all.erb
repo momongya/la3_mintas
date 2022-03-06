@@ -1,10 +1,18 @@
 <section class="center-vertical">
     <% if !@task.blank? %>
 	<% @task.each do |task| %>
-		<a class="post center-vertical" href="/group/<%= current_group.id %>/task/<%= task.id %>/edit" style="background-color: <%= current_group.color %>;">
+		<a class="post center-vertical modal-open" href="#info" style="background-color: <%= current_group.color %>;">
 			<p><%= task.title %></p>
 			<p><%= task.todo %></p>
 		</a>
+		<section id="info">
+			<h2>タイトル：<%= task.title %></h2>
+			<p>やること：<%= task.todo %></p>
+			<p>優先度：<%= task.priority %></p>
+			<p>タスクの状態：<%= task.state %></p>
+			<a href="/group/<%= current_group.id %>/task/<%= task.id %>/edit">編集</a>
+			<a href="/group/<%= current_group.id %>/task/<%= task.id %>/delete">削除</a>
+		</section>
 	<% end %>
 	<% else %>
 	<p>作成したタスクはありません</p>
