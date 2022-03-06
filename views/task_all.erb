@@ -1,7 +1,7 @@
 <section class="center-vertical">
     <% if !@task.blank? %>
 	<% @task.each do |task| %>
-		<a class="post center-vertical" href="/group/<%= current_group.id %>/task_all" style="background-color: <%= current_group.color %>;">
+		<a class="post center-vertical" href="/group/<%= current_group.id %>/task/<%= task.id %>/edit" style="background-color: <%= current_group.color %>;">
 			<p><%= task.title %></p>
 			<p><%= task.todo %></p>
 		</a>

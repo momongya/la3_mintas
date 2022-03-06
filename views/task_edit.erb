@@ -1,0 +1,13 @@
+<div class="container">
+    <form action="/group/<%= current_group.id %>/task/<%= @task.id %>/edit" method="post">
+        <input class="form-control" type="text" name="title" placeholder="作成するタスクのタイトルを入力" value="<%= CGI.escapeHTML(@task.title) %>"><br>
+        <input class="form-control" type="text" name="todo" placeholder="タスクの詳細な内容を入力" value="<%= CGI.escapeHTML(@task.todo) %>"><br>
+        <input class="form-control" type="number" name="priority" placeholder="タスクの優先度を入力" value="<%= @task.priority %>"><br>
+        <select class="form-control" type="number" name="state" placeholder="タスクの状態を選択"><br>
+			<option value="todo">ToDo</option>
+			<option value="doing">Doing</option>
+			<option value="done">Done</option>
+		</select><br>
+        <input class="form-control" type="submit" value="登録">
+    </form>
+</div>
