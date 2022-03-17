@@ -1,22 +1,40 @@
 <section class="center-vertical">
     <% if !@task.blank? %>
-	<% @task.each do |task| %>
-		<a class="post center-vertical modal-open" href="#info" style="background-color: <%= current_group.color %>;">
-			<p><%= task.title %></p>
-			<p><%= task.todo %></p>
-		</a>
-		<section id="info">
-			<h2>タイトル：<%= task.title %></h2>
-			<p>やること：<%= task.todo %></p>
-			<p>優先度：<%= task.priority %></p>
-			<p>タスクの状態：<%= task.state %></p>
-			<a href="/group/<%= current_group.id %>/task/<%= task.id %>/edit">編集</a>
-			<a href="/group/<%= current_group.id %>/task/<%= task.id %>/delete">削除</a>
-		</section>
-	<% end %>
+<% @task.each do |task| %>	
+	<!-- Button trigger modal -->
+<button type="button" class="btn post col-3" data-bs-toggle="modal" data-bs-target="#exampleModal<%= task.id %>" style="background-color: <%= current_group.color %>;">
+  <p><%= task.title %></p>
+  <p><%= task.todo %></p>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal<%= task.id %>" tabindex="-1" aria-labelledby="exampleModal<%= task.id %>Label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModal<%= task.id %>Label">タイトル：<%= task.title %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+				<p>やること：<%= task.todo %></p>
+				<p>優先度：<%= task.priority %></p>
+				<p>タスクの状態：<%= task.state %></p>
+				<p>参加しているユーザー</p>
+      </div>
+      <div class="modal-footer">
+        <!--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+        <a class="btn btn-secondary" href="/group/<%= current_group.id %>/task/<%= task.id %>/delete">削除</a>
+        <a class="btn btn-primary" href="/group/<%= current_group.id %>/task/<%= task.id %>/edit">編集</a>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+
 	<% else %>
 	<p>作成したタスクはありません</p>
 	<% end %>
 	
-	<a href="/group/<%= current_group.id %>/task/create">タスクを作成する</a>
+	<a class="btn post center-vertical" href="/group/<%= current_group.id %>/task/create">タスクを作成する</a>
 </section>

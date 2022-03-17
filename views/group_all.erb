@@ -1,8 +1,9 @@
-<section class="center-vertical">
-    <h1><%= current_user.name %>の参加しているグループ一覧</h1>
+<section>
+    <h1 class="center-vertical"><%= current_user.name %>の参加しているグループ一覧</h1>
+    <div class="d-flex justify-content-center align-items-center">
     <% unless @groups.empty? %>
 	<% @groups.each do |group| %>
-		<a class="post center-vertical" href="/group/<%= group.id %>/home" style="background-color: <%= group.color %>;">
+		<a class="btn post" href="/group/<%= group.id %>/home" style="border-radius: 50%; background-color: <%= group.color %>;">
 			<p><%= group.group_name %></p>
 			<p><%= group.code %></p>
 		</a>
@@ -10,4 +11,5 @@
 	<% else %>
 	<p>参加しているグループはありません</p>
 	<% end %>
+	</div>
 </section>

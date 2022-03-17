@@ -150,3 +150,17 @@ get '/group/:id/task/:task_id/delete' do
     task.delete
     redirect "/group/#{params[:id]}/home"
 end
+
+get '/group/:id/task/:task_id/join' do
+    JoinTask.create(
+                task_id: params[:task_id],
+                user_id: current_user.id
+                )
+    redirect "/group/#{params[:id]}/home"
+end
+
+get '/group/:id/task/:task_id/leave' do
+    j_user = JoinTask.find_by(user_id: current_user.id,task_id: params[:task_id])
+    j_user.delete
+    redirect "/group/#{params[:id]}/home"
+end

@@ -3,13 +3,30 @@
 		<form action="/group/create" method="post">
         	<input class="form-control" name="group_name" placeholder="作成するグループの名前を入力"><br>
         	<!--<input class="form-control" name="color" placeholder="グループカラーを選択"><br>-->
-        	<input type="color" name="color" list="color-list" value="#ffff00"> 色を選択
+        	<input type="color" name="color" list="color-list" value="#D3EBE8"> グループカラーを選択<br>
                 <datalist id="color-list">
-                    <option value="#ff0000">
-                    <option value="#0000ff">
-                    <option value="#ffff00">
+                    <option value="#C5D4EB">
+                    <option value="#D3EBE8">
+                    <option value="#FEF0F0">
+                    <option value="#FDD9DB">
+                    <option value="#EDCCDC">
                 </datalist>
+            <!--<input type="button" name="colorful" value="ON" onclick="btnClick(this)"> 色を選択-->
+            <!--<div class="hidden">-->
+            <!--    <div>button1</div>-->
+            <!--    <div>button1</div>-->
+            <!--</div>-->
         	<input class="form-control" type="submit" value="作成">
     	</form>
 	</div>
 </section>
+
+<script>
+  function btnClick(btn) {
+    if (btn.value === 'ON') {
+      btn.value = "OFF";
+    } else {
+      btn.value = "ON";
+    }
+  }
+</script>

@@ -6,14 +6,29 @@
   section {
     height: 100vh;
     width: 100vw;
-    background-color: #FFE9D6;
+    background-color: #fcfcfc;
+    font-family: zen-maru-gothic, sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    color: #37313D;
+    padding: 5vh 10vw;
+  }
+  
+  h1 {
+    padding: 5vh;
   }
   
   .top h1{
     font-size: 150px;
+    color: #ff0000;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(255,255,255,0.0);
+    background-image: linear-gradient(45deg, #D3EBE8, #C5D4EB);
+    font-weight: 600;
+    font-style: bold;
     letter-spacing: 0.2em;
     padding: 0 0 5vh;
-  }
+    }
 
   nav {
     height: 70px;
@@ -22,8 +37,9 @@
   }
 
   nav a {
-    font-family: 'Righteous',
-      cursive;
+    font-family: zen-maru-gothic, sans-serif;
+    font-weight: 300;
+    font-style: normal;
     color: white;
     text-decoration: none;
     margin-left: 15px;
@@ -38,9 +54,9 @@
 	  height: 350px;
     width: 100%;
     padding-top: 170px;
-    background-image: url("/assets/img/mic.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
+    /*background-image: url("/assets/img/mic.jpg");*/
+    /*background-size: cover;*/
+    /*background-repeat: no-repeat;*/
   }
 
   .first-view h1 {
@@ -54,14 +70,18 @@
     padding: 10px;
     border-radius: 8px;
   }
+  
+  section a .post{
+    border-radius: 50%;
+  }
 
   .post {
     margin: 20px;
     padding: 10px;
     width: 200px;
-    border-radius: 5px;
+    border-radius: 50%;
     word-break: break-all;
-    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.4);
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
   }
 
   .center-vertical {
