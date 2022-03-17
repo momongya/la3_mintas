@@ -11,8 +11,14 @@
 <div class="modal fade" id="exampleModal<%= task.id %>" tabindex="-1" aria-labelledby="exampleModal<%= task.id %>Label" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header d-flex justify-content-around">
         <h5 class="modal-title" id="exampleModal<%= task.id %>Label">タイトル：<%= task.title %></h5>
+        <!--<div class="toggle">-->
+        <!--  <input type="checkbox" name="check" />-->
+        <!--</div>-->
+        <div class="switch-checkbox">
+          <input type="checkbox" checked="" id="switch-check-1">
+        </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -20,10 +26,22 @@
 				<p>優先度：<%= task.priority %></p>
 				<p>タスクの状態：<%= task.state %></p>
 				<p>参加しているユーザー</p>
+				<div class="d-flex justify-content-center align-items-center">
+				  <% task.join_users.each do |user| %>
+					<div class="user-box">
+					  <img src="<%= user.top_img %>" alt="user_image" width="40" height="40">
+					</div>
+					<% end %>
+					</div>
       </div>
       <div class="modal-footer">
         <!--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
         <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+        <% if !task.join_users.find_by(id: session[:user]) %>
+          <a class="btn btn-primary" href="/group/<%= current_group.id %>/task/<%= task.id %>/join">参加</a>
+        <% else %>
+          <a class="btn btn-secondary" href="/group/<%= current_group.id %>/task/<%= task.id %>/leave">離脱</a>
+        <% end %>
         <a class="btn btn-secondary" href="/group/<%= current_group.id %>/task/<%= task.id %>/delete">削除</a>
         <a class="btn btn-primary" href="/group/<%= current_group.id %>/task/<%= task.id %>/edit">編集</a>
       </div>

@@ -30,7 +30,7 @@ class Task < ActiveRecord::Base
     belongs_to :group
     has_many :users, :through => :groups
     has_many :join_tasks
-    has_many :join_user, :through => :join_tasks, :source => :user, dependent: :destroy
+    has_many :join_users, :through => :join_tasks, :source => :user, dependent: :destroy
 end
 
 class JoinTask < ActiveRecord::Base
