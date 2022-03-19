@@ -127,6 +127,27 @@ post '/group/:id/task/create' do
     redirect "/group/#{params[:id]}/home"
 end
 
+get '/group/:id/info' do
+    erb :group_info
+end
+
+get '/group/:id/edit' do
+    @group = Group.find(params[:id])
+    
+    erb :group_edit
+end
+
+post '/group/:id/edit' do
+    group = Group.find(params[:id])
+    
+    group.group_name = params[:group_name]
+    group.code = params[:code]
+    group.color = params[:color]
+    group.save
+
+    redirect "/group/#{params[:id]}/home"
+end
+
 get '/group/:id/task/:task_id/edit' do
     @task = Task.find(params[:task_id])
     

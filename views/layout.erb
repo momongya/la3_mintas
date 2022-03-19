@@ -22,39 +22,7 @@
 	</script>
 </head>
 <body>
-  <nav class="navbar navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">みんタス</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <% if !current_user.nil? %>
-        <li class="nav-item">
-				  <a class="nav-link" href="/"><img src="<%= current_user.top_img %>" alt="user_image" width="40" height="40"></a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link" href="/group/select">グループ一覧</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link" href="/group/create">グループ作成</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link" href="/group/join">グループ参加</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link" href="/signout">Sign out</a>
-				</li>
-			<% else %>
-			  <li class="nav-item">
-				  <a class="nav-link" href="/signup">Sign up</a>
-			  </li>
-			<% end %>
-      </ul>
-    </div>
-  </div>
-　</nav>
+	
     <%= yield %>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/js/modaal.min.js"></script>

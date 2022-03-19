@@ -7,19 +7,19 @@
     
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
   		<div class="offcanvas-header">
-    		<h5 id="offcanvasRightLabel">新規グループ作成</h5>
+    		<h5 id="offcanvasRightLabel"><%= current_group.group_name %>のタスク一覧</h5>
     		<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   		</div>
   		<div class="offcanvas-body">
     		<ul class="navbar-nav">
         		<% if !current_user.nil? %>
 				  	<a class="nav-link" href="/"><img src="<%= current_user.top_img %>" alt="user_image" width="40" height="40"><p><%= current_user.name %></p></a>
-					  <a class="nav-link" href="/group/select">グループ一覧</a>
-				  	<a class="nav-link" href="/group/join">グループ参加</a>
+				  	<a class="nav-link" href="/group/<%= current_group.id %>/edit"><%= current_group.group_name %>の情報閲覧</a>
+				  	<a class="nav-link" href="/group/select">グループ一覧に戻る</a>
 				  	<a class="nav-link" href="/signout">ログアウト</a>
 				<% else %>
 					<a class="nav-link" href="/">ログイン</a>
-				  	<a class="nav-link" href="/signup">新規ユーザー登録</a>
+				  <a class="nav-link" href="/signup">新規ユーザー登録</a>
 				<% end %>
       		</ul>
   		</div>
@@ -28,13 +28,14 @@
   </nav>
 
 <section class="center-vertical">
-  <h1 class="center-vertical">新規グループ作成</h1>
+    <h1 class="center-vertical"><%= current_group.group_name %>の情報の編集</h1>
     <div class="login_button">
-		<form action="/group/create" method="post">
-		      <label for="group_name">グループの名前(必須)</label><br>
-        	<input class="form-control" name="group_name" placeholder="作成するグループの名前を入力" required><br>
-        	<!--<input class="form-control" name="color" placeholder="グループカラーを選択"><br>-->
-        	<input type="color" name="color" list="color-list" value="#D3EBE8"> グループカラーを選択<br><br>
+    <form action="/group/create" method="post">
+          <label for="group_name">グループの名前</label><br>
+        	<input class="form-control" name="group_name" placeholder="作成するグループの名前を入力" value="<%= CGI.escapeHTML(@group.group_name) %>"><br>
+        	<label for="group_code">招待用グループコード</label><br>
+        	<input class="form-control" name="group_code" placeholder="作成するグループの名前を入力" value="<%= CGI.escapeHTML(@group.code) %>"><br>
+        	<input type="color" name="color" list="color-list" value="<%= CGI.escapeHTML(@group.color) %>" value="<%= CGI.escapeHTML(@group.color) %>"> グループカラーを選択<br><br>
                 <datalist id="color-list">
                     <option value="#C5D4EB">
                     <option value="#D3EBE8">
@@ -42,22 +43,7 @@
                     <option value="#FDD9DB">
                     <option value="#EDCCDC">
                 </datalist>
-            <!--<input type="button" name="colorful" value="ON" onclick="btnClick(this)"> 色を選択-->
-            <!--<div class="hidden">-->
-            <!--    <div>button1</div>-->
-            <!--    <div>button1</div>-->
-            <!--</div>-->
-        	<input class="form-control" type="submit" value="作成">
+        	<input class="form-control" type="submit" value="変更する">
     	</form>
-	</div>
+    </div>
 </section>
-
-<script>
-  function btnClick(btn) {
-    if (btn.value === 'ON') {
-      btn.value = "OFF";
-    } else {
-      btn.value = "ON";
-    }
-  }
-</script>

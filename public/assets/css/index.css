@@ -10,12 +10,18 @@
     font-family: zen-maru-gothic, sans-serif;
     font-weight: 300;
     font-style: normal;
-    color: #37313D;
+    color: #584F4F;
     padding: 5vh 10vw;
   }
   
+  h5 {
+    font-family: zen-maru-gothic, sans-serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+  
   h1 {
-    padding: 5vh;
+    padding: 5vh 0 2vh;
   }
   
   .top h1{
@@ -40,7 +46,7 @@
     font-family: zen-maru-gothic, sans-serif;
     font-weight: 300;
     font-style: normal;
-    color: white;
+    color: #584F4F;
     text-decoration: none;
     margin-left: 15px;
   }
@@ -98,11 +104,27 @@
   }
   
   .user-box {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 8px;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*flex-wrap: wrap;*/
+    /*gap: 8px;*/
+    padding: 8px 10px 0;
+    margin: 0 5px;
+  }
+  
+  .user-box img{
+    border-radius: 50%;
+  }
+  
+  .info-box{
+    border-radius: 40px;
+    padding: 40px 0;
+    width: 40vw;
+    margin: 0 20vw;
+  }
+  
+  .group_all p {
+    color: #584F4F;
   }
   
   /*infoエリアをはじめは非表示*/
@@ -126,63 +148,6 @@
 .modaal-close:hover:after,
 .modaal-close:hover:before{
 	background:#666;
-}
-
-.toggle {
-  position: relative;
-  width: 78px;
-  height: 48px;
-  margin: 40px 60px;
-  border-radius: 50px;
-  overflow: hidden;
-  cursor: pointer;
-}
-.toggle input[type=checkbox] {
-  display: none;
-}
-.toggle:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  background: #f45e55;
-  -webkit-transition: 0.2s ease-out;
-  transition: 0.2s ease-out;
-}
-.toggle:after {
-  content: "OFF";
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 42px;
-  height: 42px;
-  display: block;
-  border-radius: 50px;
-  background: #fff;
-  box-shadow: 0 9px 28px -6px rgba(0, 0, 0, 0.3);
-  -webkit-transition: 0.2s ease-out;
-  transition: 0.2s ease-out;
-  text-align: center;
-  padding: 14px 0 0;
-  line-height: 1;
-  font-size: 14px;
-  font-weight: bold;
-  color: #df4c43;
-  letter-spacing: .5px;
-  box-sizing: border-box;
-}
-.toggle.checked:before {
-  background: #24e89c;
-}
-.toggle.checked:after {
-  content: "ON";
-  left: 33px;
-  box-shadow: 0 9px 28px -6px rgba(0, 0, 0, 0.5);
-  color: #16d088;
-  padding: 14px 0 0 1px;
 }
 
 .switch-checkbox {

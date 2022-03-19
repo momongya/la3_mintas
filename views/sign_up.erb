@@ -1,10 +1,46 @@
-<div class="container center-vertical">
+<nav class="navbar navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">みんタス</a>
+    <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  		<div class="offcanvas-header">
+    		<h5 id="offcanvasRightLabel">トップ画面</h5>
+    		<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  		</div>
+  		<div class="offcanvas-body">
+    		<ul class="navbar-nav">
+        		<% if !current_user.nil? %>
+				  	<a class="nav-link" href="/"><img src="<%= current_user.top_img %>" alt="user_image" width="40" height="40"><p><%= current_user.name %></p></a>
+				  	<a class="nav-link" href="/group/select">グループ一覧</a>
+					<a class="nav-link" href="/group/create">グループ作成</a>
+				  	<a class="nav-link" href="/group/join">グループ参加</a>
+				  	<a class="nav-link" href="/signout">ログアウト</a>
+				<% else %>
+					<a class="nav-link" href="/">ログイン</a>
+				  	<a class="nav-link" href="/signup">新規ユーザー登録</a>
+				<% end %>
+      		</ul>
+  		</div>
+	</div>
+  </div>
+  </nav>
+
+<section class="container center-vertical">
+    <h1 class="center-vertical">新規ユーザー登録</h1>
     <form action="/signup" method="post" enctype="multipart/form-data">
+        <label for="name">ユーザーの名前</label><br>
         <input class="form-control" name="name" placeholder="名前を入力" required><br>
+        <label for="email">メールアドレス</label><br>
         <input class="form-control" name="email" placeholder="メールアドレスを入力" required><br>
+        <label for="password">パスワード</label><br>
         <input class="form-control" name="password" type="password" placeholder="パスワードを入力" required><br>
+        <label for="password_confirmation">パスワードをもう1度入力</label><br>
         <input class="form-control" name="password_confirmation" type="password" placeholder="パスワードをもう一度入力" required><br>
+        <label for="top_img">アイコン画像を選択</label><br>
         <input class="form-control" name= "top_img" type="file" placeholder="アイコン画像を選択" required><br>
         <input class="form-control" type="submit" value="sign up">
     </form>
-</div>
+</section>

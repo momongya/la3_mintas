@@ -7,15 +7,15 @@
     
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
   		<div class="offcanvas-header">
-    		<h5 id="offcanvasRightLabel"><%= current_group.group_name %>のタスク一覧</h5>
+    		<h5 id="offcanvasRightLabel"><%= current_group.group_name %>の情報閲覧</h5>
     		<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   		</div>
   		<div class="offcanvas-body">
     		<ul class="navbar-nav">
         		<% if !current_user.nil? %>
 				  	<a class="nav-link" href="/"><img src="<%= current_user.top_img %>" alt="user_image" width="40" height="40"><p><%= current_user.name %></p></a>
-				  	<a class="nav-link" href="/group/<%= current_group.id %>/edit"><%= current_group.group_name %>の情報閲覧</a>
 				  	<a class="nav-link" href="/group/<%= current_group.id %>/home"><%= current_group.group_name %>のタスク一覧</a>
+				  	<a class="nav-link" href="/group/<%= current_group.id %>/edit"><%= current_group.group_name %>の情報編集</a>
 				  	<a class="nav-link" href="/group/select">グループ一覧に戻る</a>
 				  	<a class="nav-link" href="/signout">ログアウト</a>
 				<% else %>
@@ -27,20 +27,24 @@
 	</div>
   </div>
   </nav>
-
-<section class="center-vertical">
-    <h1 class="center-vertical"><%= current_group.group_name %>のタスクの編集</h1>
-    <div class="login_button">
-    <form action="/group/<%= current_group.id %>/task/<%= @task.id %>/edit" method="post">
-        <input class="form-control" type="text" name="title" placeholder="作成するタスクのタイトルを入力" value="<%= CGI.escapeHTML(@task.title) %>"><br>
-        <input class="form-control" type="text" name="todo" placeholder="タスクの詳細な内容を入力" value="<%= CGI.escapeHTML(@task.todo) %>"><br>
-        <input class="form-control" type="number" name="priority" placeholder="タスクの優先度を入力" value="<%= @task.priority %>"><br>
-        <select class="form-control" type="number" name="state" placeholder="タスクの状態を選択"><br>
-			<option value="todo">ToDo</option>
-			<option value="doing">Doing</option>
-			<option value="done">Done</option>
-		</select><br>
-        <input class="form-control" type="submit" value="登録">
-    </form>
-    </div>
+  
+  <section class="group_all">
+    <h1 class="center-vertical"><%= current_group.group_name %>の情報</h1>
+    <div class="center-vertical info-box" style="background-color: <%= current_group.color %>;">
+        <h5>グループコード</h5>
+        <h3><%= current_group.code %></h3><br>
+        <h5>参加しているユーザー</h5>
+		    <div class="d-flex justify-content-center align-items-center">
+				<% current_group.users.each do |user| %>
+				    <div class="user-box">
+					   <img src="<%= user.top_img %>" alt="user_image" width="40" height="40">
+					   <p><%= user.name %></p>
+				    </div>
+				<% end %>
+			</div>
+	</div>
+　　<div class="d-flex justify-content-center align-items-center">
+　　	<a class="btn btn-outline-primary post center-vertical" href="/group/<%= current_group.id %>/edit"><%= current_group.group_name %>の情報を編集する</a>
+		<a class="btn btn-outline-success post center-vertical" href="/group/<%= current_group.id %>/home">タスク一覧に戻る</a>
+　　</div>
 </section>

@@ -1,4 +1,33 @@
-<section>
+<nav class="navbar navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">みんタス</a>
+    <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  		<div class="offcanvas-header">
+    		<h5 id="offcanvasRightLabel">グループ一覧</h5>
+    		<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  		</div>
+  		<div class="offcanvas-body">
+    		<ul class="navbar-nav">
+        		<% if !current_user.nil? %>
+				  	<a class="nav-link" href="/"><img src="<%= current_user.top_img %>" alt="user_image" width="40" height="40"><p><%= current_user.name %></p></a>
+					<a class="nav-link" href="/group/create">グループ作成</a>
+				  	<a class="nav-link" href="/group/join">グループ参加</a>
+				  	<a class="nav-link" href="/signout">ログアウト</a>
+				<% else %>
+					<a class="nav-link" href="/">ログイン</a>
+				  	<a class="nav-link" href="/signup">新規ユーザー登録</a>
+				<% end %>
+      		</ul>
+  		</div>
+	</div>
+  </div>
+  </nav>
+
+<section class="group_all">
     <h1 class="center-vertical"><%= current_user.name %>の参加しているグループ一覧</h1>
     <div class="d-flex justify-content-center align-items-center">
     <% unless @groups.empty? %>
@@ -12,4 +41,8 @@
 	<p>参加しているグループはありません</p>
 	<% end %>
 	</div>
+　　<div class="d-flex justify-content-center align-items-center">
+　　	<a class="btn btn-outline-primary post center-vertical" href="/group/create">グループを作成する</a>
+		<a class="btn btn-outline-success post center-vertical" href="/group/join">グループに参加する</a>
+　　</div>
 </section>
