@@ -29,12 +29,11 @@
 
 <section class="group_all">
     <h1 class="center-vertical"><%= current_user.name %>の参加しているグループ一覧</h1>
-    <div class="d-flex justify-content-center align-items-center">
+    <div class="d-flex justify-content-center align-items-center flex-wrap">
     <% unless @groups.empty? %>
 	<% @groups.each do |group| %>
-		<a class="btn post" href="/group/<%= group.id %>/home" style="border-radius: 50%; background-color: <%= group.color %>;">
-			<p><%= group.group_name %></p>
-			<p><%= group.code %></p>
+		<a class="btn post group_post d-flex justify-content-center align-items-center" href="/group/<%= group.id %>/home" style="border-radius: 50%; background-color: <%= group.color %>;">
+			<h5 id="change-size"><%= group.group_name %></h5>
 		</a>
 	<% end %>
 	<% else %>

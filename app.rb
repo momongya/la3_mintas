@@ -144,8 +144,7 @@ post '/group/:id/edit' do
     group.code = params[:code]
     group.color = params[:color]
     group.save
-
-    redirect "/group/#{params[:id]}/home"
+    redirect "/group/#{params[:id]}/info"
 end
 
 get '/group/:id/task/:task_id/edit' do

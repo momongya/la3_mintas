@@ -18,6 +18,7 @@
     font-family: zen-maru-gothic, sans-serif;
     font-weight: 300;
     font-style: normal;
+    color: #584F4F;
   }
   
   h1 {
@@ -187,4 +188,10 @@
     background-color: #6CD892;
     left: .2rem;
     content: 'Doing';
+}
+
+.group_post{
+    border-radius: 50%;
+    height: 7rem;
+    width: 7rem;
 }

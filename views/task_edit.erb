@@ -32,9 +32,13 @@
     <h1 class="center-vertical"><%= current_group.group_name %>のタスクの編集</h1>
     <div class="login_button">
     <form action="/group/<%= current_group.id %>/task/<%= @task.id %>/edit" method="post">
+        <label for="title">タスクの名前</label><br>
         <input class="form-control" type="text" name="title" placeholder="作成するタスクのタイトルを入力" value="<%= CGI.escapeHTML(@task.title) %>"><br>
+        <label for="todo">タスクの詳細な内容</label><br>
         <input class="form-control" type="text" name="todo" placeholder="タスクの詳細な内容を入力" value="<%= CGI.escapeHTML(@task.todo) %>"><br>
+        <label for="priority">タスクの優先度</label><br>
         <input class="form-control" type="number" name="priority" placeholder="タスクの優先度を入力" value="<%= @task.priority %>"><br>
+        <label for="state">タスクの状態</label><br>
         <select class="form-control" type="number" name="state" placeholder="タスクの状態を選択"><br>
 			<option value="todo">ToDo</option>
 			<option value="doing">Doing</option>

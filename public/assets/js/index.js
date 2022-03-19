@@ -18,3 +18,9 @@
 		$('html').css('overflow-y','scroll');/*縦スクロールバーを出す*/
 	}
 	});
+	
+
+fitty('#change-size', {
+	minSize: 14,
+	maxSize: 35
+});
