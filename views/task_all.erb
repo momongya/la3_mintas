@@ -31,12 +31,14 @@
 <section class="group">
   <h1 class="center-vertical"><%= current_group.group_name %>のタスク一覧</h1>
     <% if !@task.blank? %>
-      <div class="d-flex justify-content-center align-items-center">
-        <% @task.each do |task| %>	
+    <div class="d-flex justify-content-center align-items-center">
+      <div class="state-box">
+      <h3 class="center-vertical">ToDo</h1>
+      <div class="d-flex justify-content-center align-items-center flex-wrap align-self-center">
+        <% @task_todo.each do |task| %>	
 	        <!-- Button trigger modal -->
-          <button type="button" class="btn post col-3" data-bs-toggle="modal" data-bs-target="#exampleModal<%= task.id %>" style="border-radius: 50%; background-color: <%= current_group.color %>;">
-            <p><%= task.title %></p>
-            <p><%= task.todo %></p>
+          <button type="button" class="btn task-box" data-bs-toggle="modal" data-bs-target="#exampleModal<%= task.id %>" style="border-radius: 50%; background-color: <%= current_group.color %>;">
+            <p id="change-task"><%= task.title %></p>
           </button>
 
           <!-- Modal -->
@@ -76,6 +78,106 @@
             </div>
           </div>
         <% end %>
+      </div>
+      </div>
+      
+      <div class="state-box">
+      <h3 class="center-vertical">Doing</h1>
+      <div class="d-flex justify-content-center align-items-center flex-wrap align-self-center">
+        <% @task_doing.each do |task| %>	
+	        <!-- Button trigger modal -->
+          <button type="button" class="btn task-box" data-bs-toggle="modal" data-bs-target="#exampleModal<%= task.id %>" style="border-radius: 50%; background-color: <%= current_group.color %>;">
+            <p id="change-task"><%= task.title %></p>
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal<%= task.id %>" tabindex="-1" aria-labelledby="exampleModal<%= task.id %>Label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header d-flex justify-content-around">
+                  <h5 class="modal-title" id="exampleModal<%= task.id %>Label">タイトル：<%= task.title %></h5>
+                  <div class="switch-checkbox">
+                    <input type="checkbox" checked="" id="switch-check-1">
+                  </div>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+				          <p>やること：<%= task.todo %></p>
+				          <p>優先度：<%= task.priority %></p>
+				          <p>タスクの状態：<%= task.state %></p>
+				          <p>参加しているユーザー</p>
+				          <div class="d-flex justify-content-center align-items-center">
+				            <% task.join_users.each do |user| %>
+					            <div class="user-box">
+					              <img src="<%= user.top_img %>" alt="user_image" width="40" height="40">
+				            	</div>
+					          <% end %>
+					        </div>
+                </div>
+                <div class="modal-footer">
+                  <% if !task.join_users.find_by(id: session[:user]) %>
+                    <a class="btn btn-success" href="/group/<%= current_group.id %>/task/<%= task.id %>/join">参加</a>
+                  <% else %>
+                    <a class="btn btn-secondary" href="/group/<%= current_group.id %>/task/<%= task.id %>/leave">離脱</a>
+                  <% end %>
+                  <a class="btn btn-warning" href="/group/<%= current_group.id %>/task/<%= task.id %>/delete">削除</a>
+                  <a class="btn btn-info" href="/group/<%= current_group.id %>/task/<%= task.id %>/edit">編集</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      </div>
+      
+     <div class="state-box">
+      <h3 class="center-vertical">ToDo</h1>
+      <div class="d-flex justify-content-center align-items-center flex-wrap align-self-center">
+        <% @task_done.each do |task| %>	
+	        <!-- Button trigger modal -->
+          <button type="button" class="btn task-box" data-bs-toggle="modal" data-bs-target="#exampleModal<%= task.id %>" style="border-radius: 50%; background-color: <%= current_group.color %>;">
+            <p id="change-task"><%= task.title %></p>
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal<%= task.id %>" tabindex="-1" aria-labelledby="exampleModal<%= task.id %>Label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header d-flex justify-content-around">
+                  <h5 class="modal-title" id="exampleModal<%= task.id %>Label">タイトル：<%= task.title %></h5>
+                  <div class="switch-checkbox">
+                    <input type="checkbox" checked="" id="switch-check-1">
+                  </div>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+				          <p>やること：<%= task.todo %></p>
+				          <p>優先度：<%= task.priority %></p>
+				          <p>タスクの状態：<%= task.state %></p>
+				          <p>参加しているユーザー</p>
+				          <div class="d-flex justify-content-center align-items-center">
+				            <% task.join_users.each do |user| %>
+					            <div class="user-box">
+					              <img src="<%= user.top_img %>" alt="user_image" width="40" height="40">
+				            	</div>
+					          <% end %>
+					        </div>
+                </div>
+                <div class="modal-footer">
+                  <% if !task.join_users.find_by(id: session[:user]) %>
+                    <a class="btn btn-success" href="/group/<%= current_group.id %>/task/<%= task.id %>/join">参加</a>
+                  <% else %>
+                    <a class="btn btn-secondary" href="/group/<%= current_group.id %>/task/<%= task.id %>/leave">離脱</a>
+                  <% end %>
+                  <a class="btn btn-warning" href="/group/<%= current_group.id %>/task/<%= task.id %>/delete">削除</a>
+                  <a class="btn btn-info" href="/group/<%= current_group.id %>/task/<%= task.id %>/edit">編集</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      </div>
       </div>
 
 	<% else %>

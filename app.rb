@@ -107,6 +107,9 @@ get '/group/:id/home' do
         @task = Task.none
     else
         @task = Task.where(group_id: params[:id])
+        @task_todo = Task.where(group_id: params[:id],state: "todo")
+        @task_doing = Task.where(group_id: params[:id],state: "doing")
+        @task_done = Task.where(group_id: params[:id],state: "done")
     end
     
     erb :task_all

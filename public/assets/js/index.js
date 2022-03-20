@@ -24,3 +24,11 @@ fitty('#change-size', {
 	minSize: 14,
 	maxSize: 35
 });
+
+fitty('#change-task', {
+	minSize: 18,
+	maxSize: 30
+});
+
+var el = document.getElementById('items');
+var sortable = Sortable.create(el);

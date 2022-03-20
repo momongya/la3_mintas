@@ -21,8 +21,12 @@
     color: #584F4F;
   }
   
+  p{
+    color: #584F4F;
+  }
+  
   h1 {
-    padding: 5vh 0 2vh;
+    padding: 3vh 0 2vh;
   }
   
   .top h1{
@@ -190,8 +194,39 @@
     content: 'Doing';
 }
 
-.group_post{
+.group-post{
     border-radius: 50%;
     height: 7rem;
     width: 7rem;
 }
+
+.task-box{
+  border-radius: 50%;
+  height: 8rem;
+  width: 10rem;
+  padding: 1rem;
+  margin: 0.3rem;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.state-box {
+  border-radius: 50px;
+  height: 60vh;
+  width: 31vw;
+  margin: 0.5vw;
+  padding:10px;
+  background-color: rgba(252,252,252,0.8);
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.group {
+  padding: 5vh 0;
+  background: linear-gradient(135deg, #DCEAFF, #EBFFFB, #FFF5F5, #FFDEE2, #FFE3F3);
+}
+
+.group h1 {
+  padding: 0 0 3vh;
+}
+
+.grid-item { width: 25%; }
+.grid-item--width2 { width: 50%; }
