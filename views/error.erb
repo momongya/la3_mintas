@@ -32,16 +32,6 @@
 	<h1>みんタス</h1>
 	<% if current_user.nil? %>
 	<div class="login_button">
-		
-		<div class="alert alert-danger" role="alert">
-			<%= @error_message %>
-		</div>
-		
-		<% if !@error_message.nil? %>
-		<div class="alert alert-danger" role="alert">
-			<%= @error_message %>
-		</div>
-		<% end %>
 		<form action="/signin" method="post">
         	<input class="form-control" name="name" placeholder="名前を入力"><br>
         	<input class="form-control" name="password" type="password" placeholder="パスワードを入力"><br>

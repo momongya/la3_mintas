@@ -61,8 +61,10 @@ post '/signin' do
     user = User.find_by(name: params[:name])
     if user && user.authenticate(params[:password])
         session[:user] = user.id
+        redirect '/group/select'
+    else 
+        redirect '/'
     end
-    redirect '/group/select'
 end
 
 get '/signout' do
