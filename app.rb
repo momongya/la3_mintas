@@ -63,7 +63,8 @@ post '/signin' do
         session[:user] = user.id
         redirect '/group/select'
     else 
-        redirect '/'
+        @error_message = "ユーザーネームかパスワードのいずれかが間違っています"
+        erb :index
     end
 end
 
@@ -181,11 +182,22 @@ get '/group/:id/task/:task_id/join' do
                 task_id: params[:task_id],
                 user_id: current_user.id
                 )
+    task = Task.find(params[:task_id])
+    if task.state == "todo"
+        task.state = "doing"
+        task.save
+    end
     redirect "/group/#{params[:id]}/home"
 end
 
 get '/group/:id/task/:task_id/leave' do
     j_user = JoinTask.find_by(user_id: current_user.id,task_id: params[:task_id])
     j_user.delete
+    users = JoinTask.find_by(task_id: params[:task_id])
+    task = Task.find(params[:task_id])
+    if users.nil?
+        task.state = "todo"
+        task.save
+    end
     redirect "/group/#{params[:id]}/home"
 end
