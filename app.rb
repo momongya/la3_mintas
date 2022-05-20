@@ -19,6 +19,10 @@ helpers do
     def current_group
         Group.find_by(id: session[:group])
     end
+    
+    def esc(text)
+        Rack::Utils.escape_html(text)
+    end
 end
 
 before do
@@ -39,16 +43,16 @@ get '/signup' do
 end
 
 post '/signup' do
-    img = params[:top_img]
+    img = esc(params[:top_img])
     tempfile = img[:tempfile]
     upload = Cloudinary::Uploader.upload(tempfile.path)
     img_url = upload['url']
     
     user = User.create(
-        name: params[:name],
-        email: params[:email],
-        password: params[:password],
-        password_confirmation: params[:password_confirmation],
+        name: esc(params[:name]),
+        email: esc(params[:email]),
+        password: esc(params[:password]),
+        password_confirmation: esc(params[:password_confirmation]),
         top_img: img_url
     )
     if user.persisted?
@@ -58,8 +62,8 @@ post '/signup' do
 end
 
 post '/signin' do
-    user = User.find_by(name: params[:name])
-    if user && user.authenticate(params[:password])
+    user = User.find_by(name: esc(params[:name]))
+    if user && user.authenticate(esc(params[:password]))
         session[:user] = user.id
         redirect '/group/select'
     else 
@@ -87,9 +91,15 @@ get '/group/create' do
 end
 
 post '/group/create' do
-    group = Group.create(group_name: params[:group_name],code: SecureRandom.alphanumeric(10),color: params[:color])
-    GroupUser.create(user_id: current_user.id, group_id: group.id)
-    
+    group = Group.create(
+                group_name: esc(params[:group_name]),
+                code: SecureRandom.alphanumeric(10),
+                color: esc(params[:color])
+                )
+    GroupUser.create(
+                user_id: current_user.id, 
+                group_id: group.id
+                )
     redirect '/group/select'
 end
 
@@ -98,9 +108,14 @@ get '/group/join' do
 end
 
 post '/group/join' do
-    group = Group.find_by(group_name: params[:group_name],code: params[:code])
-    GroupUser.create(user_id: current_user.id, group_id: group.id)
-    
+    group = Group.find_by(
+                group_name: esc(params[:group_name]),
+                code: esc(params[:code])
+                )
+    GroupUser.create(
+                user_id: current_user.id, 
+                group_id: group.id
+                )
     redirect '/group/select'
 end
 
@@ -124,9 +139,9 @@ end
 
 post '/group/:id/task/create' do
     current_group.tasks.create(
-                title: params[:title],
-                todo: params[:todo],
-                priority: params[:priority],
+                title: esc(params[:title]),
+                todo: esc(params[:todo]),
+                priority: esc(params[:priority]),
                 state: "todo",
                 leader_id: current_user.id
                 )
@@ -146,9 +161,9 @@ end
 post '/group/:id/edit' do
     group = Group.find(params[:id])
     
-    group.group_name = params[:group_name]
-    group.code = params[:code]
-    group.color = params[:color]
+    group.group_name = esc(params[:group_name])
+    group.code = esc(params[:code])
+    group.color = esc(params[:color])
     group.save
     redirect "/group/#{params[:id]}/info"
 end
@@ -162,10 +177,10 @@ end
 post '/group/:id/task/:task_id/edit' do
     task = Task.find(params[:task_id])
     
-    task.title = params[:title]
-    task.todo = params[:todo]
-    task.priority = params[:priority]
-    task.state = params[:state]
+    task.title = esc(params[:title])
+    task.todo = esc(params[:todo])
+    task.priority = esc(params[:priority])
+    task.state = esc(params[:state])
     task.save
 
     redirect "/group/#{params[:id]}/home"
@@ -191,7 +206,10 @@ get '/group/:id/task/:task_id/join' do
 end
 
 get '/group/:id/task/:task_id/leave' do
-    j_user = JoinTask.find_by(user_id: current_user.id,task_id: params[:task_id])
+    j_user = JoinTask.find_by(
+                user_id: current_user.id,
+                task_id: params[:task_id]
+                )
     j_user.delete
     users = JoinTask.find_by(task_id: params[:task_id])
     task = Task.find(params[:task_id])
