@@ -55,17 +55,25 @@ post '/signup' do
     upload = Cloudinary::Uploader.upload(tempfile.path)
     img_url = upload['url']
     
-    user = User.create(
+    @user = User.create(
         name: esc(params[:name]),
         email: esc(params[:email]),
         password: esc(params[:password]),
         password_confirmation: esc(params[:password_confirmation]),
         top_img: img_url
     )
-    if user.persisted?
+    if @user.persisted?
         session[:user] = user.id
     end
-    redirect '/group/select'
+    
+    if @user.save
+        redirect '/group/select'
+    else
+        @error_message = @user.errors.full_messages
+        puts @error_message
+        erb :sign_up
+    end
+    
 end
 
 post '/signin' do
@@ -98,7 +106,7 @@ get '/group/create' do
     if current_user.nil?
         erb :index
     else
-        erb :group_all
+        erb :group_create
     end
 end
 
@@ -112,7 +120,13 @@ post '/group/create' do
                 user_id: current_user.id, 
                 group_id: group.id
                 )
-    redirect '/group/select'
+    if group.save
+        redirect '/group/select'
+    else
+        @error_message = group.errors.full_messages
+        puts @error_message
+        erb :group_create
+    end
 end
 
 get '/group/join' do
