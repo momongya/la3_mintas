@@ -9,6 +9,8 @@ require 'net/http'
 require 'sinatra/activerecord'
 require 'securerandom'
 
+
+
 enable :sessions
 
 helpers do
@@ -34,6 +36,11 @@ before do
     end
 end
 
+error do
+    @error = 'エラーが発生しました。 - ' + env['sinatra.error'].name
+    erb :error
+ end
+
 get '/' do
     erb :index
 end
@@ -43,7 +50,7 @@ get '/signup' do
 end
 
 post '/signup' do
-    img = esc(params[:top_img])
+    img = params[:top_img]
     tempfile = img[:tempfile]
     upload = Cloudinary::Uploader.upload(tempfile.path)
     img_url = upload['url']
@@ -80,14 +87,19 @@ end
 get '/group/select' do
     if current_user.nil?
         @groups = Group.none
+        erb :index
     else
         @groups = current_user.groups
+        erb :group_all
     end
-    erb :group_all
 end
 
 get '/group/create' do
-    erb :group_create
+    if current_user.nil?
+        erb :index
+    else
+        erb :group_all
+    end
 end
 
 post '/group/create' do
@@ -104,7 +116,11 @@ post '/group/create' do
 end
 
 get '/group/join' do
-    erb :group_join
+    if current_group.nil? or current_user.nil?
+        erb :index
+    else
+        erb :group_join
+    end
 end
 
 post '/group/join' do
@@ -120,21 +136,29 @@ post '/group/join' do
 end
 
 get '/group/:id/home' do
-    session[:group] = params[:id]
-    if Task.count == 0
-        @task = Task.none
+    if current_user.nil?
+        erb :index
     else
-        @task = Task.where(group_id: params[:id])
-        @task_todo = Task.where(group_id: params[:id],state: "todo")
-        @task_doing = Task.where(group_id: params[:id],state: "doing")
-        @task_done = Task.where(group_id: params[:id],state: "done")
+        session[:group] = params[:id]
+        if Task.count == 0
+            @task = Task.none
+        else
+            @task = Task.where(group_id: params[:id])
+            @task_todo = Task.where(group_id: params[:id],state: "todo")
+            @task_doing = Task.where(group_id: params[:id],state: "doing")
+            @task_done = Task.where(group_id: params[:id],state: "done")
+        end
+        
+        erb :task_all
     end
-    
-    erb :task_all
 end
 
 get '/group/:id/task/create' do
-    erb :task_create
+    if current_group.nil? or current_user.nil?
+        erb :index
+    else
+        erb :task_create
+    end
 end
 
 post '/group/:id/task/create' do
@@ -149,13 +173,21 @@ post '/group/:id/task/create' do
 end
 
 get '/group/:id/info' do
-    erb :group_info
+    if current_group.nil? or current_user.nil?
+        erb :index
+    else
+        erb :group_info
+    end
 end
 
 get '/group/:id/edit' do
-    @group = Group.find(params[:id])
-    
-    erb :group_edit
+    if current_group.nil? or current_user.nil?
+        erb :index
+    else
+        @group = Group.find(params[:id])
+        
+        erb :group_edit
+    end
 end
 
 post '/group/:id/edit' do
@@ -169,9 +201,13 @@ post '/group/:id/edit' do
 end
 
 get '/group/:id/task/:task_id/edit' do
-    @task = Task.find(params[:task_id])
-    
-    erb :task_edit
+    if current_group.nil? or current_user.nil?
+        erb :index
+    else
+        @task = Task.find(params[:task_id])
+        
+        erb :task_edit
+    end
 end
 
 post '/group/:id/task/:task_id/edit' do
@@ -187,35 +223,47 @@ post '/group/:id/task/:task_id/edit' do
 end
 
 get '/group/:id/task/:task_id/delete' do
-    task = Task.find(params[:task_id])
-    task.delete
-    redirect "/group/#{params[:id]}/home"
+    if current_group.nil? or current_user.nil?
+        erb :index
+    else
+        task = Task.find(params[:task_id])
+        task.delete
+        redirect "/group/#{params[:id]}/home"
+    end
 end
 
 get '/group/:id/task/:task_id/join' do
-    JoinTask.create(
-                task_id: params[:task_id],
-                user_id: current_user.id
-                )
-    task = Task.find(params[:task_id])
-    if task.state == "todo"
-        task.state = "doing"
-        task.save
+    if current_group.nil? or current_user.nil?
+        erb :index
+    else
+        JoinTask.create(
+                    task_id: params[:task_id],
+                    user_id: current_user.id
+                    )
+        task = Task.find(params[:task_id])
+        if task.state == "todo"
+            task.state = "doing"
+            task.save
+        end
+        redirect "/group/#{params[:id]}/home"
     end
-    redirect "/group/#{params[:id]}/home"
 end
 
 get '/group/:id/task/:task_id/leave' do
-    j_user = JoinTask.find_by(
-                user_id: current_user.id,
-                task_id: params[:task_id]
-                )
-    j_user.delete
-    users = JoinTask.find_by(task_id: params[:task_id])
-    task = Task.find(params[:task_id])
-    if users.nil?
-        task.state = "todo"
-        task.save
+    if current_group.nil? or current_user.nil?
+        erb :index
+    else
+        j_user = JoinTask.find_by(
+                    user_id: current_user.id,
+                    task_id: params[:task_id]
+                    )
+        j_user.delete
+        users = JoinTask.find_by(task_id: params[:task_id])
+        task = Task.find(params[:task_id])
+        if users.nil?
+            task.state = "todo"
+            task.save
+        end
+        redirect "/group/#{params[:id]}/home"
     end
-    redirect "/group/#{params[:id]}/home"
 end
