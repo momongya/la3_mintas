@@ -33,11 +33,11 @@
     <div class="login_button">
 		<form action="/group/<%= current_group.id %>/task/create" method="post">
 		    <label for="title">タスクのタイトル</label><br>
-        	<input class="form-control" name="title" placeholder="作成するタスクのタイトルを入力" require><br>
+        	<input class="form-control" name="title" placeholder="作成するタスクのタイトルを入力" required><br>
         	<label for="todo">タスクの詳細な内容</label><br>
-        	<textarea class="form-control" name="todo" rows="4" cols="40" placeholder="タスクの詳細な内容を入力"></textarea><br><br>
-        	<label for="priority">タスクの優先度</label><br>
-        	<input class="form-control" type="number" name="priority" placeholder="タスクの優先度を入力"><br>
+        	<textarea class="form-control" name="todo" rows="4" cols="40" placeholder="タスクの詳細な内容を入力"required></textarea><br><br>
+        	<label for="priority">タスクの優先度(1から5までの間で)</label><br>
+        	<input class="form-control" type="number" name="priority" placeholder="タスクの優先度を入力" max="5" min="1" maxlength="1" required><br>
         	<input class="form-control" type="submit" value="作成">
     	</form>
 	</div>
