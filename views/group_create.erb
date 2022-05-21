@@ -30,8 +30,15 @@
 <section class="center-vertical">
   <h1 class="center-vertical">新規グループ作成</h1>
     <div class="login_button">
+    <% if !@error_message.nil? %>
+			<div class="alert alert-danger" role="alert">
+			  <% @error_message.each do |error| %>
+				  <%= error %><br>
+				<% end %>
+			</div>
+		<% end %>
 		<form action="/group/create" method="post">
-		      <label for="group_name">グループの名前(必須)</label><br>
+		      <label for="group_name">グループ名(独自のものを入力してください)</label><br>
         	<input class="form-control" name="group_name" placeholder="作成するグループの名前を入力" required><br>
         	<!--<input class="form-control" name="color" placeholder="グループカラーを選択"><br>-->
         	<input type="color" name="color" list="color-list" value="#D3EBE8"> グループカラーを選択<br><br>
