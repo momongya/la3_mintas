@@ -30,12 +30,19 @@
 
 <section class="container center-vertical">
     <h1 class="center-vertical">新規ユーザー登録</h1>
+    <% if !@error_message.nil? %>
+			<div class="alert alert-danger" role="alert">
+			  <% @error_message.each do |error| %>
+				  <%= error %><br>
+				<% end %>
+			</div>
+		<% end %>
     <form action="/signup" method="post" enctype="multipart/form-data">
-        <label for="name">ユーザーの名前</label><br>
+        <label for="name">ユーザーの名前(5から15文字の長さで英字の被りのないものを入力してください)</label><br>
         <input class="form-control" name="name" placeholder="名前を入力" required><br>
         <label for="email">メールアドレス</label><br>
         <input class="form-control" name="email" placeholder="メールアドレスを入力" required><br>
-        <label for="password">パスワード</label><br>
+        <label for="password">パスワード(5から15文字の長さで半角英字と半角数字をそれぞれ1文字以上入れてください)</label><br>
         <input class="form-control" name="password" type="password" placeholder="パスワードを入力" required><br>
         <label for="password_confirmation">パスワードをもう1度入力</label><br>
         <input class="form-control" name="password_confirmation" type="password" placeholder="パスワードをもう一度入力" required><br>
