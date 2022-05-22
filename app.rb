@@ -124,7 +124,6 @@ post '/group/create' do
         redirect '/group/select'
     else
         @error_message = group.errors.full_messages
-        puts @error_message
         erb :group_create
     end
 end
@@ -152,8 +151,6 @@ end
 get '/group/:id/home' do
     if current_user.nil?
         erb :index
-    elsif current_group.nil?
-        erb :group_all
     else
         session[:group] = params[:id]
         if Task.count == 0
@@ -172,8 +169,6 @@ end
 get '/group/:id/task/create' do
     if current_user.nil?
         erb :index
-    elsif current_group.nil?
-        erb :group_all
     else
         erb :task_create
     end

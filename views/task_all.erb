@@ -33,7 +33,7 @@
     <% if !@task.blank? %>
     <div class="d-flex justify-content-center align-items-center">
       <div class="state-box">
-      <h3 class="center-vertical">ToDo</h1>
+      <h3 class="center-vertical">やるべきこと</h1>
       <div class="d-flex justify-content-center align-items-center flex-wrap align-self-center">
         <% @task_todo.each do |task| %>	
 	        <!-- Button trigger modal -->
@@ -82,7 +82,7 @@
       </div>
       
       <div class="state-box">
-      <h3 class="center-vertical">Doing</h1>
+      <h3 class="center-vertical">今行っているもの</h1>
       <div class="d-flex justify-content-center align-items-center flex-wrap align-self-center">
         <% @task_doing.each do |task| %>	
 	        <!-- Button trigger modal -->
@@ -134,7 +134,7 @@
       </div>
       
      <div class="state-box">
-      <h3 class="center-vertical">Done</h1>
+      <h3 class="center-vertical">終わったもの</h1>
       <div class="d-flex justify-content-center align-items-center flex-wrap align-self-center">
         <% @task_done.each do |task| %>	
 	        <!-- Button trigger modal -->
