@@ -36,7 +36,7 @@
 
     <h1 class="center-vertical"><%= current_user.name %>の参加しているグループ一覧</h1>
     <div id="items" class="d-flex justify-content-center align-items-center flex-wrap">
-    <% unless @groups.empty? %>
+    <% if !@groups.nil? %>
 	<% @groups.each do |group| %>
 		<a class="btn post group-post d-flex justify-content-center align-items-center" href="/group/<%= group.id %>/home" style="border-radius: 50%; background-color: <%= group.color %>;">
 			<h5 id="change-size"><%= group.group_name %></h5>

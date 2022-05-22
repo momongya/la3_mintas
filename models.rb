@@ -45,6 +45,12 @@ class Group < ActiveRecord::Base
     validates :group_name,
         presence: { message: "を入力してください" },
         uniqueness: { message: "を被りのないものに変更してください" }
+    validates :code,
+        presence: { message: "を入力してください" },
+        length: { 
+            in: 5..15,
+            message: "を5から15文字の長さで入力してください"
+        }
     has_many :group_users
     has_many :users, :through => :group_users, dependent: :destroy
     has_many :tasks
