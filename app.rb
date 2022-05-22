@@ -130,7 +130,7 @@ post '/group/create' do
 end
 
 get '/group/join' do
-    if current_group.nil? or current_user.nil?
+    if current_user.nil?
         erb :index
     else
         erb :group_join
@@ -152,6 +152,8 @@ end
 get '/group/:id/home' do
     if current_user.nil?
         erb :index
+    elsif current_group.nil?
+        erb :group_all
     else
         session[:group] = params[:id]
         if Task.count == 0
@@ -168,8 +170,10 @@ get '/group/:id/home' do
 end
 
 get '/group/:id/task/create' do
-    if current_group.nil? or current_user.nil?
+    if current_user.nil?
         erb :index
+    elsif current_group.nil?
+        erb :group_all
     else
         erb :task_create
     end
@@ -187,7 +191,7 @@ post '/group/:id/task/create' do
 end
 
 get '/group/:id/info' do
-    if current_group.nil? or current_user.nil?
+    if current_user.nil?
         erb :index
     else
         erb :group_info
@@ -195,7 +199,7 @@ get '/group/:id/info' do
 end
 
 get '/group/:id/edit' do
-    if current_group.nil? or current_user.nil?
+    if current_user.nil?
         erb :index
     else
         @group = Group.find(params[:id])
@@ -215,13 +219,37 @@ post '/group/:id/edit' do
 end
 
 get '/group/:id/task/:task_id/edit' do
-    if current_group.nil? or current_user.nil?
+    if current_user.nil?
         erb :index
     else
         @task = Task.find(params[:task_id])
         
         erb :task_edit
     end
+end
+
+post '/group/:id/task/:task_id/change_status' do
+    task = Task.find(params[:task_id])
+    
+    if task.state == "doing"
+        task.state = "done"
+        task.save
+    elsif task.state == "done"
+        task.state = "doing"
+        task.save
+    elsif task.state == "todo"
+        task.state = "doing"
+        task.save
+    end
+    
+    redirect "/group/#{params[:id]}/home"
+end
+
+post '/group/:id/task/:task_id/change_todostatus' do
+    task = Task.find(params[:task_id])
+    task.state = "todo"
+    task.save
+    redirect "/group/#{params[:id]}/home"
 end
 
 post '/group/:id/task/:task_id/edit' do
@@ -237,7 +265,7 @@ post '/group/:id/task/:task_id/edit' do
 end
 
 get '/group/:id/task/:task_id/delete' do
-    if current_group.nil? or current_user.nil?
+    if current_user.nil?
         erb :index
     else
         task = Task.find(params[:task_id])
@@ -247,7 +275,7 @@ get '/group/:id/task/:task_id/delete' do
 end
 
 get '/group/:id/task/:task_id/join' do
-    if current_group.nil? or current_user.nil?
+    if current_user.nil?
         erb :index
     else
         JoinTask.create(
@@ -264,7 +292,7 @@ get '/group/:id/task/:task_id/join' do
 end
 
 get '/group/:id/task/:task_id/leave' do
-    if current_group.nil? or current_user.nil?
+    if current_user.nil?
         erb :index
     else
         j_user = JoinTask.find_by(
