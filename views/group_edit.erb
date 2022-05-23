@@ -32,9 +32,9 @@
     <div class="login_button">
     <form action="/group/<%= current_group.id %>/edit" method="post">
           <label for="group_name">グループの名前</label><br>
-        	<input class="form-control" name="group_name" placeholder="作成するグループの名前を入力" value="<%= CGI.escapeHTML(current_group.group_name) %>"><br>
-        	<label for="code">招待用グループコード</label><br>
-        	<input class="form-control" name="code" placeholder="招待用グループコードを入力" value="<%= CGI.escapeHTML(current_group.code) %>"><br>
+        	<input class="form-control" name="group_name" placeholder="作成するグループの名前を入力" value="<%= CGI.escapeHTML(current_group.group_name) %>" required><br>
+        	<label for="code">招待用グループコード（5から15文字の長さ）</label><br>
+        	<input class="form-control" name="code" placeholder="招待用グループコードを入力" value="<%= CGI.escapeHTML(current_group.code) %>" required><br>
         	<input type="color" name="color" list="color-list" value="<%= CGI.escapeHTML(@group.color) %>" value="<%= CGI.escapeHTML(@group.color) %>"> グループカラーを選択<br><br>
                 <datalist id="color-list">
                     <option value="#C5D4EB">

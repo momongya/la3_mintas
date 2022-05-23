@@ -33,7 +33,7 @@
     <% if !@task.blank? %>
     <div class="d-flex justify-content-center align-items-center">
       <div class="state-box">
-      <h3 class="center-vertical">ToDo</h1>
+      <h3 class="center-vertical">やるべきこと</h1>
       <div class="d-flex justify-content-center align-items-center flex-wrap align-self-center">
         <% @task_todo.each do |task| %>	
 	        <!-- Button trigger modal -->
@@ -46,10 +46,10 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
               <div class="modal-content">
                 <div class="modal-header d-flex justify-content-around">
-                  <h5 class="modal-title" id="exampleModal<%= task.id %>Label">タイトル：<%= task.title %></h5>
-                  <div class="switch-checkbox">
-                    <input type="checkbox" checked="" id="switch-check-1">
-                  </div>
+                  <h5 class="modal-title me-auto" id="exampleModal<%= task.id %>Label">タイトル：<%= task.title %></h5>
+                  <form action="/group/<%= current_group.id %>/task/<%= task.id %>/change_status" method="post">
+                    <input type="submit" class="btn btn-outline-secondary rounded-pill" value="doingにする">
+                  </form>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -82,7 +82,7 @@
       </div>
       
       <div class="state-box">
-      <h3 class="center-vertical">Doing</h1>
+      <h3 class="center-vertical">今行っているもの</h1>
       <div class="d-flex justify-content-center align-items-center flex-wrap align-self-center">
         <% @task_doing.each do |task| %>	
 	        <!-- Button trigger modal -->
@@ -95,10 +95,13 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
               <div class="modal-content">
                 <div class="modal-header d-flex justify-content-around">
-                  <h5 class="modal-title" id="exampleModal<%= task.id %>Label">タイトル：<%= task.title %></h5>
-                  <div class="switch-checkbox">
-                    <input type="checkbox" checked="" id="switch-check-1">
-                  </div>
+                  <h5 class="modal-title me-auto" id="exampleModal<%= task.id %>Label">タイトル：<%= task.title %></h5>
+                  <form action="/group/<%= current_group.id %>/task/<%= task.id %>/change_todostatus" method="post">
+                    <input type="submit" class="btn btn-outline-secondary rounded-pill" value="todoにする">
+                  </form>
+                  <form action="/group/<%= current_group.id %>/task/<%= task.id %>/change_status" method="post">
+                    <input type="submit" class="btn btn-outline-secondary rounded-pill" value="doneにする">
+                  </form>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -131,7 +134,7 @@
       </div>
       
      <div class="state-box">
-      <h3 class="center-vertical">Done</h1>
+      <h3 class="center-vertical">終わったもの</h1>
       <div class="d-flex justify-content-center align-items-center flex-wrap align-self-center">
         <% @task_done.each do |task| %>	
 	        <!-- Button trigger modal -->
@@ -143,11 +146,13 @@
           <div class="modal fade" id="exampleModal<%= task.id %>" tabindex="-1" aria-labelledby="exampleModal<%= task.id %>Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
               <div class="modal-content">
-                <div class="modal-header d-flex justify-content-around">
-                  <h5 class="modal-title" id="exampleModal<%= task.id %>Label">タイトル：<%= task.title %></h5>
-                  <div class="switch-checkbox">
-                    <input type="checkbox" checked="" id="switch-check-1">
-                  </div>
+                <div class="modal-header d-flex justify-content-evenly">
+                  <h5 class="modal-title me-auto" id="exampleModal<%= task.id %>Label">タイトル：<%= task.title %></h5>
+                  
+                  <form action="/group/<%= current_group.id %>/task/<%= task.id %>/change_status" method="post">
+                    <input type="submit" class="btn btn-outline-secondary rounded-pill" value="doingにする">
+                  </form>
+                  
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
