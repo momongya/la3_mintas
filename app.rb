@@ -63,7 +63,7 @@ post '/signup' do
         top_img: img_url
     )
     if @user.persisted?
-        session[:user] = user.id
+        session[:user] = @user.id
     end
     
     if @user.save
